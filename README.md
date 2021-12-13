@@ -25,3 +25,6 @@ override.tf.json
 # Файлы
 .terraformrc
 terraform.rc
+
+Fix fix fix!!!
+
