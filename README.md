@@ -1,30 +1,33 @@
-# devops-netology
-First string
-
-# скрытые папки terraform
-**/.terraform/*
-
-# файлы с расширением .tfstate
-*.tfstate
-# файлы в чьих названиях присутствует .tfstate.
-*.tfstate.*
-
-# Лог файл с соответствующим названием
-crash.log
-
-# файлы с соответствующим расширением
-*.tfvars
-
-# Соответствующие файлы 
-override.tf
-override.tf.json
-#и группы файлов в чьих названиях встречается
-*_override.tf
-*_override.tf.json
-
-# Файлы
-.terraformrc
-terraform.rc
-
-
-PyCharm edit
+# H.W. 3.1
+#5.
+RAM:1024mb
+CPU:2 cpu
+HDD:64gb
+video:8mb
+# 6.
+ config.vm.provider "virtualbox" do |vb|
+   vb.memory = "2048"
+   vb.cpus = "4"
+  end
+# 8.
+HISTFILESIZE 525
+ignoreboth это сокращение для 2х директив ignorespace and ignoredups, 
+#9
+{} - зарезервированные слова, список, в т.ч. список команд команд в отличии от "(...)" исполнятся в текущем инстансе, 
+используется в различных условных циклах, условных операторах или ограничивает тело функции.
+В командах выполняет подстановку элементов из списка
+76
+#10
+touch {000001..100000}.txt
+300000 - создать не удасться, это слишком дилинный список аргументов.
+#11
+проверяет условие у -d /tmp и возвращает ее статус (0 или 1), наличие катаолга /tmp
+#12
+mkdir /tmp/new_path_dir/
+cp /bin/bash /tmp/new_path_dir/
+PATH=/tmp/new_path_dir/:$PATH
+#13
+at запускает команду в назначенное время.
+batch запускает команду при достижении определённого уровня нагрузки системы.
+#14
+vagrant suspend
