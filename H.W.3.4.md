@@ -1,5 +1,23 @@
-#1.1
-С документацией ознакомился. Необходимо предоставить какие-то примеры\уточнения?
+#1.2
+Если я правильно понял задачу, конфигурационный файл
+
+[Unit]
+
+Description=Node Exporter
+ 
+[Service]
+
+ExecStart=/opt/node_exporter/node_exporter $Options
+
+EnvironmentFile=/etc/sysconfig/node_exporter
+ 
+[Install]
+
+WantedBy=default.target
+
+/etc/sysconfig/node_exporter:
+
+Options='--collector.nfs --collector.nfsd'
 
 #2
 CPU:
