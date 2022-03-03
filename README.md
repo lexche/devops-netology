@@ -1,132 +1,91 @@
-## H.W. 3.5
+## H.W. 3.7
 
-#2.
-Hardlink это ссылка на тот же самый файл и имеет тот же inode то права будут одни и теже.
+#1
 
-# touch 11
+# ip link -Linux 
 
-# ln 11 22
+# ipconfig - Windows
 
-# ls -ilh
+#2
 
-total 24K
+# LLDP   lldpctl
 
-2038 -rw-r--r-- 2 root root    0 Feb 14 20:15 11
+#3
 
-2038 -rw-r--r-- 2 root root    0 Feb 14 20:15 22
+# VLAN Пакеты : vlan, iproute.
+
+# sw1# show vlan brief
+
+# VLAN Name                             Status    Ports
+
+---- -------------------------------- --------- -------------------------------
+
+1    default                          active    Fa0/6, Fa0/7, Fa0/8, Fa0/9, 
+
+                                                Fa0/10, Fa0/11, Fa0/12, Fa0/13,
+
+                                                Fa0/14, Fa0/15, Fa0/16, Fa0/17,  
+
+                                                Fa0/18, Fa0/19, Fa0/20, Fa0/21,
+
+                                                Fa0/22, Fa0/23, Fa0/24
+
+
+2    test                             active    Fa0/1, Fa0/2
+
+    
+
+10   VLAN0010                         active    Fa0/4, Fa0/5
 
 #4
 
-/dev/sdb1       8:17    0 2G   0 part
+# Статический и динамический
 
-/dev/sdb2       8:18    0 511M 0 part
+# mode=0 (balance-rr)  mode=1 (active-backup)  mode=2 (balance-xor)  mode=3 (broadcast)  
+
+# mode=4 (802.3ad)  mode=5 (balance-tlb)  mode=6 (balance-alb)
+
+
+sudo nano /etc/network/interfaces
+
+# The primary network interface
+
+auto bond0
+
+iface bond0 inet static
+
+    address x.x.x.x
+
+    netmask 255.255.255.0    
+
+    gateway x.x.x.x
+
+    dns-nameservers x.x.x.x x.x.x.x
+
+    dns-search domain.local
+
+        slaves eth0 eth1
+
+        bond_mode 0
+
+        bond-miimon 100
+
+        bond_downdelay 200
+
+        bound_updelay 200
 
 #5
 
-# sfdisk -d /dev/sdb|sfdisk --force /dev/sdc
+# 8 IP-адресов  32 подсети
 
 #6
 
-# mdadm --create --verbose /dev/md1 -l 1 -n 2 /dev/sd{b1,c1}
+100.64.0.1/26
 
 #7
 
-# mdadm --create --verbose /dev/md2 -l 0 -n 2 /dev/sd{b2,c2}
+arp -a
 
-#8
+ip neigh flush all - Linux  netsh interface ip delete arpcache - Windows
 
-# pvcreate /dev/md1 /dev/md2
-
-#9
-
-# vgcreate vg1 /dev/md1 /dev/md2
-
-#10
-
-# lvcreate -L 100M vg1 /dev/md2
-
-#11
-
-# mkfs.ext4 /dev/vg1/lvol0
-
-#12
-
-# mkdir /tmp/new
-
-# mount /dev/vg1/lvol0 /tmp/new
-
-#14
-
-NAME                 MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
-
-sda                    8:0    0   64G  0 disk
-
-├─sda1                 8:1    0    1M  0 part  /boot/efi
-
-├─sda2                 8:2    0    1G  0 part
-
-└─sda3                 8:3    0   63G  0 part
-
-  └─ubuntu--vg-ubuntu  253:0  0 31.5G  0 lvm   /
-
-sdb                    8:16   0  2.5G  0 disk  
-
-├─sdb1                 8:17   0    2G  0 part  
-
-│ └─md1                9:1    0    2G  0 raid1 
-
-└─sdb2                 8:18   0  511M  0 part  
-
-  └─md2                9:0    0 1018M  0 raid0 
-
-    └─vg1-lvol0      253:2    0  100M  0 lvm   /tmp/new
-
-sdc                    8:32   0  2.5G  0 disk  
-
-├─sdc1                 8:33   0    2G  0 part  
-
-│ └─md1                9:1    0    2G  0 raid1 
-
-└─sdc2                 8:34   0  511M  0 part  
-
-  └─md2                9:0    0 1018M  0 raid0 
-
-    └─vg1-lvol0      253:2    0  100M  0 lvm   /tmp/new
-
-#15
-
-# gzip -t /tmp/new/test.gz && echo $?
-
-0
-
-#16
-
-# pvmove /dev/md2
-
-#17
-
-# mdadm /dev/md1 --fail /dev/sdb1
-
-#18
-
-# dmesg |grep md1
-
-md/raid1:md1: not clean -- starting background reconstruction
-
-md/raid1:md1: active with 2 out of 2 mirrors
-
-md1: detected capacity change from 0 to 2144337920
-
-md: resync of RAID array md1
-
-md: md1: resync done.
-
-md/raid1:md1: Disk failure on sdb1, disabling device.
-
-md/raid1:md1: Operation continuing on 1 devices
-
-#19
-
-# gzip -t /tmp/new/test.gz && echo $?
-
-0
+arp -d IP
