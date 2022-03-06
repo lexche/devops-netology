@@ -14,28 +14,26 @@
 
 # VLAN Пакеты : vlan, iproute.
 
-# sw1# show vlan brief
 
-# VLAN Name                             Status    Ports
+/etc/systemd/network/vlan20.network
 
----- -------------------------------- --------- -------------------------------
+[Match]
 
-1    default                          active    Fa0/6, Fa0/7, Fa0/8, Fa0/9, 
+Name=vlan20
 
-                                                Fa0/10, Fa0/11, Fa0/12, Fa0/13,
+[Network]
 
-                                                Fa0/14, Fa0/15, Fa0/16, Fa0/17,  
+VLAN=vlan20
 
-                                                Fa0/18, Fa0/19, Fa0/20, Fa0/21,
+[Address]
 
-                                                Fa0/22, Fa0/23, Fa0/24
+Address=10.10.40.2/24
 
+[Route]
 
-2    test                             active    Fa0/1, Fa0/2
+Destination=10.10.40.0/24
 
-    
-
-10   VLAN0010                         active    Fa0/4, Fa0/5
+Gateway=10.10.40.1
 
 #4
 
