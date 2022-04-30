@@ -20,11 +20,7 @@
       
       MPLS label: none
 
-#2.
-
-
-
-# Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+#2. Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 #default          *              0.0.0.0         UG    0      0        0 eth0
 
