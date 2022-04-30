@@ -26,7 +26,9 @@
 #169.254.0.0      *              255.255.240.0   U     0      0        0 dummy0
 
 root@itpbt001:/home/lexo# ip route add 10.10.10.0 via 192.168.18.150
+
 root@itpbt001:/home/lexo# ip route
+
 10.10.10.0 via 192.168.18.150 dev dummy0
 
 
