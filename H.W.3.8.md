@@ -1,14 +1,23 @@
 # H.W.3.8
 
 #1. Routing entry for 188.35.16.0/21
+
   Known via "bgp 6447", distance 20, metric 0
+  
   Tag 6939, type external
+  
   Last update from 64.71.137.241 1d22h ago
+  
   Routing Descriptor Blocks:
+  
   * 64.71.137.241, from 64.71.137.241, 1d22h ago
+  * 
       Route metric is 0, traffic share count is 1
+      
       AS Hops 3
+      
       Route tag 6939
+      
       MPLS label: none
 
 #2.
