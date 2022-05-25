@@ -7,24 +7,70 @@ https://hub.docker.com/r/lexche/alpine-nginx
 ![img.png](screenshots/5.3.1.png)
 
 ## Задача 2
-Ansible использует метод push, что не требует установки демонов, агентов. Использует SSH без необходимости дополнительно настраивать PKI.
+Высоконагруженное монолитное java веб-приложение
+Физический сервер. Монолитное, селдовательно в микросерверах не реализуемо без изменения кода, а высоконагруженность создаёт необходимость в физическом доступе к ресурсами, без использования гипервизора виртуалки.
+
+Nodejs веб-приложение
+Это веб приложение, достаточно докера.
+
+Мобильное приложение c версиями для Android и iOS
+Виртаулизация - приложение в докере не имеет GUI, соответственно не наш вариант.
+
+Шина данных на базе Apache Kafka
+Можно использовать контейнеризацию, если есть финансовые ограничения или тестовая среда, если финансовая нагрузка некритична, то виртуализация.
+
+Elasticsearch кластер для реализации логирования продуктивного веб-приложения - три ноды elasticsearch, два logstash и две ноды kibana
+Для указанных продуктов есть контейнеры на dockerhub, так что возможен вариант с контейнеризацией, но если необходима большая отказоустойчивость, то сам Elasticsearvh лучше на виртуальную машину, отказоустойчивость решается на уровне кластера, kibana и logstash так же на виртуалках.
+
+Мониторинг-стек на базе Prometheus и Grafana
+Контейнеризация. Из плюсов: скорость развёртывания, масштабируемость.
+
+MongoDB, как основное хранилище данных для java-приложения
+Виртуализация, так как речь идёт о хранилище данных, так же возможно использовать физический сервер, но это, на мой взгляд, более расточительно.
+
+Gitlab сервер для реализации CI/CD процессов и приватный (закрытый) Docker Registry
+Физический сервер или виртуализация, зависит от объёмов и динамики заполнения жёстких дисков, если есть понимание, что в обозримом времени мощностей физического сервера будет не хватать, то смотрел бы в сторону виртуализации.
 
 ## Задача 3
 ```
-[lexo@ubnttest ~]$ vboxmanage --version
-6.1.32_Ubuntur149290
+[lexo@ubnttest ~]$ docker run -t -d -v /data:/data centos:centos7
+1740233e5f153e275d3612cd7c78c5fa195ddd8e7d403f1eec2105e657e4eb2c
+
 ```
 ```
-[lexo@ubnttest ~]$ vagrant -v
-Vagrant 2.2.6
+[lexo@ubnttest ~]$  docker ps
+CONTAINER ID   IMAGE            COMMAND       CREATED         STATUS         PORTS     NAMES
+1740233e5f15   centos:centos7   "/bin/bash"   2 minutes ago   Up 2 minutes             reverent_newton
+
 ```
 ```
-[lexo@ubnttest ~]$ ansible --version
-ansible 2.9.6
-  config file = /etc/ansible/ansible.cfg
-  configured module search path = ['/home/lexo/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/lib/python3/dist-packages/ansible
-  executable location = /usr/bin/ansible
-  python version = 3.8.10 (default, Mar 15 2022, 12:22:08) [GCC 9.4.0]
+[lexo@ubnttest ~]$ docker exec -it 1740233e5f15 bash
+[root@1740233e5f15 /]# ls -lah /
+total 68K
+drwxr-xr-x   1 root root 4.0K May 25 15:46 .
+drwxr-xr-x   1 root root 4.0K May 25 15:46 ..
+-rwxr-xr-x   1 root root    0 May 25 15:46 .dockerenv
+-rw-r--r--   1 root root  11K Dec  5  2018 anaconda-post.log
+lrwxrwxrwx   1 root root    7 Dec  5  2018 bin -> usr/bin
+drwxr-xr-x   2 root root 4.0K May 25 08:51 data
+drwxr-xr-x   5 root root  340 May 25 15:46 dev
+drwxr-xr-x   1 root root 4.0K May 25 15:46 etc
+drwxr-xr-x   2 root root 4.0K Apr 11  2018 home
+lrwxrwxrwx   1 root root    7 Dec  5  2018 lib -> usr/lib
+drwxr-xr-x   2 root root 4.0K Apr 11  2018 media
+drwxr-xr-x   2 root root 4.0K Apr 11  2018 mnt
+drwxr-xr-x   2 root root 4.0K Apr 11  2018 opt
+dr-xr-xr-x 189 root root    0 May 25 15:46 proc
+dr-xr-x---   2 root root 4.0K Dec  5  2018 root
+drwxr-xr-x  11 root root 4.0K Dec  5  2018 run
+lrwxrwxrwx   1 root root    8 Dec  5  2018 sbin -> usr/sbin
+drwxr-xr-x   2 root root 4.0K Apr 11  2018 srv
+dr-xr-xr-x  12 root root    0 May 25 15:46 sys
+drwxrwxrwt   7 root root 4.0K Dec  5  2018 tmp
+drwxr-xr-x  12 root root 4.0K Dec  5  2018 usr
+drwxr-xr-x  18 root root 4.0K Dec  5  2018 var
+
 ```
-```
+
+Аналогичные действия для второго контейнера
+
