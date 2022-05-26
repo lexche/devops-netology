@@ -76,16 +76,10 @@ drwxr-xr-x  18 root root 4.0K Dec  5  2018 var
 ```
 [lexo@ubnttest ~]$ docker run -t -d -v /data:/data centos:centos7
 b3356b381fc92b4669b5b731d0dfe8a7436a3196174557f341862465937e74ce
-
-```
-```
 [lexo@ubnttest ~]$  docker ps
 CONTAINER ID   IMAGE            COMMAND       CREATED         STATUS         PORTS     NAMES
 b3356b381fc9   arm32v7/debian   "bash"        5 seconds ago   Up 3 seconds             naughty_austin
 1740233e5f15   centos:centos7   "/bin/bash"   16 hours ago    Up 16 hours              reverent_newton
-
-```
-
 [lexo@ubnttest ~]$ docker exec -it b3356b381fc9 bash
 root@b3356b381fc9:/# ls -lah /
 total 72K
@@ -123,15 +117,14 @@ debin_file_1
 ```
 Создаю файл с хостовой машины:
 
-[lexo@ubnttest ~]$ touch /data/Ubnt_file_27
-
 ```
+[lexo@ubnttest ~]$ touch /data/Ubnt_file_27
 
 ```
 Вывод содержимого папки запрошен из контейнера CentOS:
 
+```
 [lexo@ubnttest ~]$ docker exec -it 1740233e5f15 bash
-
 [root@1740233e5f15 /]# ls -lah /data/
 total 12K
 drwxr-xr-x 2 root root 4.0K May 26 08:24 .
