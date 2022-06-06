@@ -17,8 +17,8 @@ Overlay Network -  распределенная сеть кластера, ко�
 
 ## Задача 2
 
-![img.png](screenshots/5.4.2.png)
+![img.png](screenshots/5.5.1.png)
 
 ## Задача 3
 
-![img.png](screenshots/5.4.3.png)
+![img.png](screenshots/5.5.2.png)
