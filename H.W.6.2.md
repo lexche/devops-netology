@@ -16,14 +16,14 @@ $ docker run --rm --name pstgrs -e POSTGRES_PASSWORD=postgres -ti -p 5432:5432 -
 postgres=# \l
 
                                  List of databases
-   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
------------+----------+----------+------------+------------+-----------------------
- postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
- template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
- template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
-(3 rows)
+       Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+    -----------+----------+----------+------------+------------+-----------------------
+     postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+     template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+               |          |          |            |            | postgres=CTc/postgres
+     template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+	       |          |          |            |            | postgres=CTc/postgres
+    (3 rows)
 
 
 ## Задача 2
