@@ -75,6 +75,15 @@ GRANT UPDATE ON TABLE public.orders TO "test-simple-user";
 
 GRANT DELETE ON TABLE public.orders TO "test-simple-user";
 
+Список баз данных:
+
+![img.png](screenshots/6.2.1.png)
+
+Список таблиц и привелегий:
+
+![img.png](screenshots/6.2.2.png)
+
+
 ## Задача 3
 
 insert into orders VALUES (1, 'Шоколад', 10), (2, 'Принтер', 3000), (3, 'Книга', 500), (4, 'Монитор', 7000), (5, 'Гитара', 4000);
