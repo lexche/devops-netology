@@ -5,77 +5,50 @@
 
 mysql> status
 
---------------
+    --------------
+    mysql  Ver 8.0.29 for Linux on x86_64 (MySQL Community Server - GPL)
+    Connection id:          37
 
-mysql  Ver 8.0.29 for Linux on x86_64 (MySQL Community Server - GPL)
+    Current database:       test_db
+    Current user:           root@127.0.0.1
+    SSL:                    Cipher in use is TLS_AES_256_GCM_SHA384
+    Current pager:          stdout
+    Using outfile:          ''
+    Using delimiter:        ;
+    Server version:         8.0.29 MySQL Community Server - GPL
+    Protocol version:       10
+    Connection:             127.0.0.1 via TCP/IP
+    Server characterset:    utf8mb4
+    Db     characterset:    utf8mb4
+    Client characterset:    latin1
+    Conn.  characterset:    latin1
+    TCP port:               3306
+    Binary data as:         Hexadecimal
+    Uptime:                 1 hour 25 min 21 sec
 
-Connection id:          37
-
-Current database:       test_db
-
-Current user:           root@127.0.0.1
-
-SSL:                    Cipher in use is TLS_AES_256_GCM_SHA384
-
-Current pager:          stdout
-
-Using outfile:          ''
-
-Using delimiter:        ;
-
-Server version:         8.0.29 MySQL Community Server - GPL
-
-Protocol version:       10
-
-Connection:             127.0.0.1 via TCP/IP
-
-Server characterset:    utf8mb4
-
-Db     characterset:    utf8mb4
-
-Client characterset:    latin1
-
-Conn.  characterset:    latin1
-
-TCP port:               3306
-
-Binary data as:         Hexadecimal
-
-Uptime:                 1 hour 25 min 21 sec
-
-
-Threads: 2  Questions: 136  Slow queries: 0  Opens: 219  Flush tables: 3  Open tables: 129  Querie
+    Threads: 2  Questions: 136  Slow queries: 0  Opens: 219  Flush tables: 3  Open tables: 129  Querie
 
 Список таблица
 
-mysql> show tables;
+    mysql> show tables;
+    +-------------------+
+    | Tables_in_test_db |
+    +-------------------+
+    | orders            |
+    +-------------------+
 
-+-------------------+
-
-| Tables_in_test_db |
-
-+-------------------+
-
-| orders            |
-
-+-------------------+
-
-1 row in set (0.00 sec)
+    1 row in set (0.00 sec)
 
 
-mysql> select count(*) from orders where price>300;
+    mysql> select count(*) from orders where price>300;
 
-+----------+
+    +----------+
+    | count(*) |
+    +----------+
+    |        1 |
+    +----------+
 
-| count(*) |
-
-+----------+
-
-|        1 |
-
-+----------+
-
-1 row in set (0.00 sec)
+    1 row in set (0.00 sec)
 
 
 ## Задача 2
