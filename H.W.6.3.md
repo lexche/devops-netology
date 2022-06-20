@@ -55,109 +55,74 @@ mysql> status
 
 Создание пользователя
 
-create user 'test'@'localhost' 
-
+    create user 'test'@'localhost' 
     identified with mysql_native_password by 'test-pass' 
-
     with max_queries_per_hour 100
-
     password expire interval 180 day 
-
     failed_login_attempts 3 
-
     attribute '{"fname": "James","lname": "Pretty"}';
 
 Предоставление прав
 
-mysql> GRANT Select ON test_db.orders TO 'test'@'localhost';
-
-Query OK, 0 rows affected, 1 warning (0.01 sec)
+    mysql> GRANT Select ON test_db.orders TO 'test'@'localhost';
+    Query OK, 0 rows affected, 1 warning (0.01 sec)
 
 Информация о пользователе
 
-mysql> SELECT * FROM INFORMATION_SCHEMA.USER_ATTRIBUTES WHERE USER='test';
+    mysql> SELECT * FROM INFORMATION_SCHEMA.USER_ATTRIBUTES WHERE USER='test';
 
-+------+-----------+---------------------------------------+
-
-| USER | HOST      | ATTRIBUTE                             |
-
-+------+-----------+---------------------------------------+
-
-| test | localhost | {"fname": "James", "lname": "Pretty"} |
-
-+------+-----------+---------------------------------------+
-
-1 row in set (0.00 sec)
+    +------+-----------+---------------------------------------+
+    | USER | HOST      | ATTRIBUTE                             |
+    +------+-----------+---------------------------------------+
+    | test | localhost | {"fname": "James", "lname": "Pretty"} |
+    +------+-----------+---------------------------------------+
+    1 row in set (0.00 sec)
 
 
 
 ## Задача 3
 
-mysql> SELECT TABLE_NAME,ENGINE,ROW_FORMAT,TABLE_ROWS,DATA_LENGTH,INDEX_LENGTH FROM information_schema.TABLES WHERE table_name = 'orders' and  TABLE_SCHEMA = 'test_db' ORDER BY ENGINE asc;
+    mysql> SELECT TABLE_NAME,ENGINE,ROW_FORMAT,TABLE_ROWS,DATA_LENGTH,INDEX_LENGTH FROM information_schema.TABLES WHERE table_name = 'orders' and  TABLE_SCHEMA = 'test_db' ORDER BY ENGINE asc;
 
-+------------+--------+------------+------------+-------------+--------------+
-
-| TABLE_NAME | ENGINE | ROW_FORMAT | TABLE_ROWS | DATA_LENGTH | INDEX_LENGTH |
-
-+------------+--------+------------+------------+-------------+--------------+
-
-| orders     | InnoDB | Dynamic    |          5 |       16384 |            0 |
-
-+------------+--------+------------+------------+-------------+--------------+
-
-1 row in set (0.00 sec)
+    +------------+--------+------------+------------+-------------+--------------+
+    | TABLE_NAME | ENGINE | ROW_FORMAT | TABLE_ROWS | DATA_LENGTH | INDEX_LENGTH |
+    +------------+--------+------------+------------+-------------+--------------+
+    | orders     | InnoDB | Dynamic    |          5 |       16384 |            0 |
+    +------------+--------+------------+------------+-------------+--------------+
+    1 row in set (0.00 sec)
 
 
 
-mysql> ALTER TABLE orders ENGINE = MyISAM;
+    mysql> ALTER TABLE orders ENGINE = MyISAM;
+    Query OK, 5 rows affected (0.03 sec)
+    Records: 5  Duplicates: 0  Warnings: 0
+    
 
-Query OK, 5 rows affected (0.03 sec)
+    mysql>  ALTER TABLE orders ENGINE = InnoDB;
+    Query OK, 5 rows affected (0.03 sec)
+    Records: 5  Duplicates: 0  Warnings: 0
 
-Records: 5  Duplicates: 0  Warnings: 0
-
-mysql>  ALTER TABLE orders ENGINE = InnoDB;
-
-Query OK, 5 rows affected (0.03 sec)
-
-Records: 5  Duplicates: 0  Warnings: 0
-
-mysql> show profiles;
-
-+----------+------------+------------------------------------+
-
-| Query_ID | Duration   | Query                              |
-
-+----------+------------+------------------------------------+
-
-|        1 | 0.03432100 | ALTER TABLE orders ENGINE = MyISAM |
-
-|        2 | 0.02856000 | ALTER TABLE orders ENGINE = InnoDB |
-
-+----------+------------+------------------------------------+
-
-2 rows in set, 1 warning (0.00 sec)
+    mysql> show profiles;
+    +----------+------------+------------------------------------+
+    | Query_ID | Duration   | Query                              |
+    +----------+------------+------------------------------------+
+    |        1 | 0.03432100 | ALTER TABLE orders ENGINE = MyISAM |
+    |        2 | 0.02856000 | ALTER TABLE orders ENGINE = InnoDB |
+    +----------+------------+------------------------------------+
+    2 rows in set, 1 warning (0.00 sec)
 
 
 ## Задача 4
 
-[mysqld]
+    [mysqld]
+    pid-file        = /var/run/mysqld/mysqld.pid
+    socket          = /var/run/mysqld/mysqld.sock
+    datadir         = /var/lib/mysql
+    secure-file-priv= NULL
+    innodb_flush_log_at_trx_commit = 0 
+    innodb_file_per_table = 1
+    autocommit = 0
+    innodb_log_buffer_size	= 1M
 
-pid-file        = /var/run/mysqld/mysqld.pid
-
-socket          = /var/run/mysqld/mysqld.sock
-
-datadir         = /var/lib/mysql
-
-secure-file-priv= NULL
-
-innodb_flush_log_at_trx_commit = 0 
-
-innodb_file_per_table = 1
-
-autocommit = 0
-
-innodb_log_buffer_size	= 1M
-
-key_buffer_size = 2448М
-
-max_binlog_size	= 100M
+    key_buffer_size = 2448М
+    max_binlog_size	= 100M
