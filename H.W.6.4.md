@@ -3,126 +3,62 @@
 
 ## Задача 1
 
-mysql> status
-
-    --------------
-    mysql  Ver 8.0.29 for Linux on x86_64 (MySQL Community Server - GPL)
-    Connection id:          37
-
-    Current database:       test_db
-    Current user:           root@127.0.0.1
-    SSL:                    Cipher in use is TLS_AES_256_GCM_SHA384
-    Current pager:          stdout
-    Using outfile:          ''
-    Using delimiter:        ;
-    Server version:         8.0.29 MySQL Community Server - GPL
-    Protocol version:       10
-    Connection:             127.0.0.1 via TCP/IP
-    Server characterset:    utf8mb4
-    Db     characterset:    utf8mb4
-    Client characterset:    latin1
-    Conn.  characterset:    latin1
-    TCP port:               3306
-    Binary data as:         Hexadecimal
-    Uptime:                 1 hour 25 min 21 sec
-
-    Threads: 2  Questions: 136  Slow queries: 0  Opens: 219  Flush tables: 3  Open tables: 129  Querie
-
-Список таблица
-
-    mysql> show tables;
-    +-------------------+
-    | Tables_in_test_db |
-    +-------------------+
-    | orders            |
-    +-------------------+
-
-    1 row in set (0.00 sec)
-
-
-    mysql> select count(*) from orders where price>300;
-
-    +----------+
-    | count(*) |
-    +----------+
-    |        1 |
-    +----------+
-
-    1 row in set (0.00 sec)
-
+    \l - список БД
+    \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo} connect to new database (currently "postgres") - подключение к БД
+    \dt[S+] [PATTERN] - список таблиц
+    \d[S+]  NAME - описание содержимого таблиц
+    \q - выход из psql
 
 ## Задача 2
 
-Создание пользователя
+Создание базы
 
-    create user 'test'@'localhost' 
-    identified with mysql_native_password by 'test-pass' 
-    with max_queries_per_hour 100
-    password expire interval 180 day 
-    failed_login_attempts 3 
-    attribute '{"fname": "James","lname": "Pretty"}';
+    postgres=# CREATE DATABASE test_database;
+    CREATE DATABASE
 
-Предоставление прав
+Восстановление базы
 
-    mysql> GRANT Select ON test_db.orders TO 'test'@'localhost';
-    Query OK, 0 rows affected, 1 warning (0.01 sec)
-
-Информация о пользователе
-
-    mysql> SELECT * FROM INFORMATION_SCHEMA.USER_ATTRIBUTES WHERE USER='test';
-
-    +------+-----------+---------------------------------------+
-    | USER | HOST      | ATTRIBUTE                             |
-    +------+-----------+---------------------------------------+
-    | test | localhost | {"fname": "James", "lname": "Pretty"} |
-    +------+-----------+---------------------------------------+
-    1 row in set (0.00 sec)
+    $ psql -U postgres -f /backup/dump.sql test_database
 
 
+    test_database=# ANALYZE VERBOSE public.orders;
+    INFO:  analyzing "public.orders"
+    INFO:  "orders": scanned 1 of 1 pages, containing 8 live rows and 0 dead rows; 8 rows in sample, 8 estimated total rows
+    ANALYZE
+
+Использование таблицы pg_stats
+
+    postgres=# select avg_width from pg_stats where tablename='orders';
+     avg_width 
+    -----------
+             4
+            16
+             4
+    (3 rows)
 
 ## Задача 3
 
-    mysql> SELECT TABLE_NAME,ENGINE,ROW_FORMAT,TABLE_ROWS,DATA_LENGTH,INDEX_LENGTH FROM information_schema.TABLES WHERE table_name = 'orders' and  TABLE_SCHEMA = 'test_db' ORDER BY ENGINE asc;
+Да, можно было, необходимо было определить тип на моменте проектирования и создания - partitioned table.
 
-    +------------+--------+------------+------------+-------------+--------------+
-    | TABLE_NAME | ENGINE | ROW_FORMAT | TABLE_ROWS | DATA_LENGTH | INDEX_LENGTH |
-    +------------+--------+------------+------------+-------------+--------------+
-    | orders     | InnoDB | Dynamic    |          5 |       16384 |            0 |
-    +------------+--------+------------+------------+-------------+--------------+
-    1 row in set (0.00 sec)
-
-
-
-    mysql> ALTER TABLE orders ENGINE = MyISAM;
-    Query OK, 5 rows affected (0.03 sec)
-    Records: 5  Duplicates: 0  Warnings: 0
-    
-
-    mysql>  ALTER TABLE orders ENGINE = InnoDB;
-    Query OK, 5 rows affected (0.03 sec)
-    Records: 5  Duplicates: 0  Warnings: 0
-
-    mysql> show profiles;
-    +----------+------------+------------------------------------+
-    | Query_ID | Duration   | Query                              |
-    +----------+------------+------------------------------------+
-    |        1 | 0.03432100 | ALTER TABLE orders ENGINE = MyISAM |
-    |        2 | 0.02856000 | ALTER TABLE orders ENGINE = InnoDB |
-    +----------+------------+------------------------------------+
-    2 rows in set, 1 warning (0.00 sec)
-
+    postgres=# 
+    begin;
+        create table orders_simple (
+            id integer NOT NULL,
+            title varchar(80) NOT NULL,
+            price integer) partition by range(price);
+        create table orders_less499 partition of orders_new for values from (0) to (499);
+        create table orders_more499 partition of orders_new for values from (499) to (99999);
+        insert into orders_simple (id, title, price) select * from orders;
+    commit;
+    BEGIN
+    CREATE TABLE
+    CREATE TABLE
+    CREATE TABLE
+    INSERT 0 8
+    COMMIT
 
 ## Задача 4
 
-    [mysqld]
-    pid-file        = /var/run/mysqld/mysqld.pid
-    socket          = /var/run/mysqld/mysqld.sock
-    datadir         = /var/lib/mysql
-    secure-file-priv= NULL
-    innodb_flush_log_at_trx_commit = 0 
-    innodb_file_per_table = 1
-    autocommit = 0
-    innodb_log_buffer_size	= 1M
+    # pg_dump -U postgres -d test_database >test_database_dump.sql
 
-    key_buffer_size = 2448М
-    max_binlog_size	= 100M
+Для уникальности можно добавить индекс или первичный ключ.
