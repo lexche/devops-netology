@@ -9,25 +9,25 @@ terraform {
 
 provider yandex {
   token     = " "
-  cloud_id  = "b1gkgvmr9o8bsvjohk1b"
-  folder_id = "b1gvmrjec5nkml550njb"
+  cloud_id  = "b4skgvme2o8fsvjohk1c"
+  folder_id = "b4svmrjec6nkm1l50njc"
   zone      = "default-ru-central1-a"
 }
 
 resource yandex_compute_image ubu-img {
   name          = "ubuntu-20-04-lts-v20210908"
-  source_image  = "fd81hgrcv6lsnkremf32"
+  source_image  = "hd81hgrbv9lsekremf31"
 }
 
 resource "yandex_vpc_network" "net" {
-  name = "net"
+  name = "tf-netology-vm"
 }
 
 resource "yandex_vpc_subnet" "subnet" {
   name           = "subnet"
   zone           = "ru-central1-a"
   network_id     = yandex_vpc_network.net.id
-  v4_cidr_blocks = ["192.168.10.0/24"]
+  v4_cidr_blocks = ["192.168.11.0/24"]
 }
 
 locals {
@@ -41,7 +41,7 @@ resource "yandex_compute_instance" "vm-count" {
   name = "vm-${count.index}-${terraform.workspace}"
 
   resources {
-    cores  = "1"
+    cores  = "2"
     memory = "2"
   }
 
