@@ -1,24 +1,36 @@
-# Домашнее задание к занятию "5.5. Оркестрация кластером Docker контейнеров на примере Docker Swarm"
+# Домашнее задание к занятию "08.01 Введение в Ansible."
 
 
-## Задача 1
-В чём отличие режимов работы сервисов в Docker Swarm кластере: replication и global?
-```
-Когда указан mode global - сервис запустится на всех нодах, в случае с replication - только на нодах, которые указаны в конфиге.
-```
-Какой алгоритм выбора лидера используется в Docker Swarm кластере?
-```
-Алгоритм RAFT. Raft является алгоритмом распределённого консенсуса, который нужен, чтобы несколько участников могли совместно решить, произошло ли событие или нет.
-```
-Что такое Overlay Network?
-```
-Overlay Network -  распределенная сеть кластера, которая позволяет общаться контейнерам между собой на разных нодах.
-```
+## 1
 
-## Задача 2
+## 2
+
+## 3
 
 ![img.png](screenshots/5.5.1.png)
 
-## Задача 3
+## 5-6
 
 ![img.png](screenshots/5.5.2.png)
+
+## 7
+
+    ansible-vault encrypt group_vars/deb/examp.yml && ansible-vault encrypt group_vars/el/examp.yml
+
+## 8
+
+    ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass
+
+## 9
+
+local
+
+## 10
+
+  local:
+    hosts:
+      localhost:
+        ansible_connection: local
+
+## 11
+
