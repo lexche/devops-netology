@@ -1,0 +1,7 @@
+app_lexanar_ru_ip_addr_internal: "10.10.1.28"
+db01_lexanar_ru_ip_addr_internal: "10.10.1.9"
+db02_lexanar_ru_ip_addr_internal: "10.10.1.30"
+entrance_lexanar_ru_ip_addr_external: "51.250.65.182"
+gitlab_lexanar_ru_ip_addr_internal: "10.10.1.27"
+monitoring_lexanar_ru_ip_addr_internal: "10.10.1.7"
+runner_lexanar_ru_ip_addr_internal: "10.10.1.11"
