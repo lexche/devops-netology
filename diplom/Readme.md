@@ -12,5 +12,14 @@
 8. Настроить мониторинг инфраструктуры с помощью стека: Prometheus, Alert Manager и Grafana.
 
 
-# 1. Этап
+#### 1.
 Регистрирую домен lexanar.ru на nic.ru. Прописываю DNS-серверы YC.
+
+![img.png](scrnshts/1.png)
+
+#### 2.
+В Terraform Cloud создаю workspace:
+
+![img.png](scrnshts/2.png)
+
+Развёртывание инфраструктуры в YC будет осуществляться при помощи Terraform. Конфигурационные файлы доступны по [ссылке](https://github.com/lexche/devops-netology/tree/master/diplom/terraform).
