@@ -75,6 +75,30 @@ Success! The configuration is valid.
 
 Добавляю IP-адреса серверов в variables.yml
 
+Запускаю роли основного сервера, кластера БД и WordPress:
+```
+ansible-playbook entrance/task/main.yml
+
+PLAY RECAP **********************************************************************************************************
+lexanar.ru                 : ok=18   changed=16   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+
+ansible-playbook db/task/main.yml
+
+PLAY RECAP **********************************************************************************************************
+db01.lexanar.ru            : ok=17   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+db02.lexanar.ru            : ok=12   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+ansible-playbook app/task/main.yml
+
+PLAY RECAP **********************************************************************************************************
+app.lexanar.ru             : ok=18   changed=16   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+```
+
+Проверяю сертификат:
+
+![img.png](scrnshts/4.png)
 
 
 
