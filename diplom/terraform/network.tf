@@ -8,10 +8,9 @@ resource "yandex_vpc_subnet" "private_vpc_subnet" {
   zone           = "ru-central1-a"
   v4_cidr_blocks = ["10.10.1.0/24"]
   route_table_id = yandex_vpc_route_table.nat_vpc_route_table.id
-
   depends_on = [
     yandex_vpc_route_table.nat_vpc_route_table
-  ]
+		 ]
 }
 
 resource "yandex_vpc_subnet" "public_vpc_subnet" {
@@ -31,7 +30,7 @@ resource "yandex_dns_zone" "dns_zone" {
 
 resource "yandex_dns_recordset" "www_recordset" {
   zone_id = yandex_dns_zone.dns_zone.id
-  name    = "www.lexanar.ru."
+  name    = "lexanar.ru."
   type    = "A"
   ttl     = 600
   data    = [yandex_compute_instance.entrance_instance.network_interface.0.nat_ip_address]

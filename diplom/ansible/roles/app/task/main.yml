@@ -63,8 +63,6 @@
             </Directory>
             <IfModule mod_rewrite.c>
               RewriteEngine On
-              RewriteCond %{HTTPS} off
-              RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
             </IfModule>
           </VirtualHost>
     - name: a2ensite wordpress
@@ -100,12 +98,12 @@
     - name: Add `WP_SITEURL` to Wordpress config
       lineinfile:
         path: /var/www/wordpress/wp-config.php
-        line: define( 'WP_HOME', 'https://www.lexanar.ru' );
+        line: define( 'WP_HOME', 'https://lexanar.ru' );
 
     - name: Add `WP_SITEURL` to Wordpress config
       lineinfile:
         path: /var/www/wordpress/wp-config.php
-        line: define( 'WP_SITEURL', 'https://www.lexanar.ru' );
+        line: define( 'WP_SITEURL', 'https://lexanar.ru' );
 
 
     - name: Include Docker task from `common` role
@@ -117,4 +115,3 @@
       include_role:
         name: common
         tasks_from: node-exporter
-

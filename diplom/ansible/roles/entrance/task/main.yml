@@ -18,6 +18,7 @@
       ansible.builtin.apt:
         name:
           - nginx
+          - mc
         state: present
         update_cache: true
 
@@ -41,7 +42,7 @@
         content: |
           server {
               listen 80;
-              server_name www.lexanar.ru;
+              server_name lexanar.ru;
           
               location / {
                 proxy_set_header Host $host;
@@ -52,7 +53,7 @@
                 proxy_pass http://{{ app_lexanar_ru_ip_addr_internal }};
                 proxy_read_timeout 90;
           
-                proxy_redirect http://{{ app_lexanar_ru_ip_addr_internal }} http://www.lexanar.ru;
+                proxy_redirect http://{{ app_lexanar_ru_ip_addr_internal }} http://lexanar.ru;
               }
           }
           
@@ -145,20 +146,21 @@
     - name: Install snap certbot
       command: snap install --classic certbot
 
-    - name: Request for SSL for `www.lexanar.ru`
-      command: certbot -d www.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos --test-cert
+
+    - name: Request for SSL for `lexanar.ru`
+      command: certbot -d lexanar.ru -m klubenb@mail.ru --nginx --agree-tos
 
     - name: Request for SSL for `grafana.lexanar.ru`
-      command: certbot -d grafana.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos --test-cert
+      command: certbot -d grafana.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos
 
     - name: Request for SSL for `prometheus.lexanar.ru`
-      command: certbot -d prometheus.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos --test-cert
+      command: certbot -d prometheus.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos
 
     - name: Request for SSL for `alertmanager.lexanar.ru`
-      command: certbot -d alertmanager.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos --test-cert
+      command: certbot -d alertmanager.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos
 
     - name: Request for SSL for `gitlab.lexanar.ru`
-      command: certbot -d gitlab.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos --test-cert
+      command: certbot -d gitlab.lexanar.ru -m klubenb@mail.ru --nginx --agree-tos
 
     - name: Include Docker task from `common` role
       include_role:
