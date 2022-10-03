@@ -51,10 +51,31 @@ You may now begin working with Terraform Cloud. Try running "terraform plan" to
 see any changes that are required for your infrastructure.
 
 If you ever set or change modules or Terraform Settings, run "terraform init"
-again to reinitialize your working directory. ```
+again to reinitialize your working directory.
+
+terraform validate:
+Success! The configuration is valid.     
+```
+
+Далее terraform apply --auto-approve. Проверяю создануую инфраструктуру в YC:
+
+![img.png](scrnshts/3.png)
+
+![img.png](scrnshts/5.png)
+
+Успех.
+
+#### 3-5.
+
+Далее использую Ansible. Конфигурации ролей доступны по [ссылке.](https://github.com/lexche/devops-netology/tree/master/diplom/ansible)
+
+Добавляю значения output-переменных Terraform в ~/.ssh/config .
+
+Очищаю  файл known_hosts.
+
+Добавляю IP-адреса серверов в variables.yml
 
 
-`terraform validate:
-Success! The configuration is valid.`
+
 
 
