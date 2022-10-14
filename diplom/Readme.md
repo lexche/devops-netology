@@ -175,8 +175,11 @@ monitoring.lexanar.ru      : ok=13   changed=8    unreachable=0    failed=0    s
 
 ```
 Prometheus:
+![img.png](scrnshts/11.png)
 
 Grafana:
+![img.png](scrnshts/12.png)
 
 Alertmanager:
+![img.png](scrnshts/13.png)
 
