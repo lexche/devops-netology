@@ -100,6 +100,83 @@ app.lexanar.ru             : ok=18   changed=16   unreachable=0    failed=0    s
 
 ![img.png](scrnshts/4.png)
 
+Установка Wp:
+
+![img.png](scrnshts/6.png)
+
+Главная страница WP:
+
+![img.png](scrnshts/7.png)
 
 
+#### 6.
+
+Запускаю роль GitLab\runner :
+```
+ansible-playbook gitlab/task/main.yml 
+
+PLAY RECAP **********************************************************************************************************
+gitlab.lexanar.ru   : ok=14   changed=14   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+
+```
+
+Создаю gitlab-runner по инструкции:
+
+```
+gitlab-runner register
+....
+```
+
+В Wordpress-проекте создадю pipeline-файл .gitlab-ci.yml:
+```
+
+before_script:
+  - eval $(ssh-agent -s)
+  - echo "$ssh_key" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploy" 
+    # Upload to server
+    - rsync -vz -e "ssh -o StrictHostKeyChecking=no" ./* /var/www/wordpress/
+    - ssh -o StrictHostKeyChecking=no rm -rf /var/www/wordpress/.git
+    # Provide file permissions
+   - ssh -o StrictHostKeyChecking=no sudo chown -R www-data /var/www/wordpress/ 
+   
+```    
+Добавляю .git-репозиторий для Wordpress-проекта:
+
+``` 
+git init
+git remote add origin http://gitlab.lexanar.ru/gitlab-instance-ab37f24a/wordpress.git
+git add .
+.....
+``` 
+
+![img.png](scrnshts/8.png)
+
+![img.png](scrnshts/9.png)
+
+![img.png](scrnshts/10.png)
+
+
+#### 7.
+
+Запускаю роль для установки Prometheus, Grafana, Alert Manager:
+
+```
+ansible-playbook monitoring/task/main.yml
+
+PLAY RECAP **********************************************************************************************************
+monitoring.lexanar.ru      : ok=13   changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+```
+Prometheus:
+
+Grafana:
+
+Alertmanager:
 
